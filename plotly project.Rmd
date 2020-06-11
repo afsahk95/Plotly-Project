@@ -1,0 +1,30 @@
+---
+title: "plotly"
+author: "Afsah"
+date: "10/06/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Using plotly to plot closing stock prices of European indices from 1991 to 1998
+
+```{r}
+library(plotly)
+library(tidyr)
+library(dplyr)
+```
+
+```{r}
+data("EuStockMarkets")
+stocks <- as.data.frame(EuStockMarkets) %>%
+  gather(index, price) %>%
+  mutate(time = rep(time(EuStockMarkets), 4))
+```
+
+```{r}
+plot_ly(stocks, x = ~time, y = ~price, color = ~index, mode = "lines")
+```
+
